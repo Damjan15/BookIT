@@ -7,9 +7,11 @@ import rooms from "@/data/rooms.json";
 import { FaChevronLeft } from "react-icons/fa";
 import BookingForm from "@/components/BookingForm";
 
-export default function Room({ params }) {
-  const { id } = params;
-  const room = rooms.find((room) => room.$id === id);
+import getSingleRoom from "@/actions/getSingleRoom";
+
+export default async function Room({ params }) {
+  const { id } = await params;
+  const room = await getSingleRoom(id);
 
   if (!room) {
     return <Heading title="Room Not Found" />;
