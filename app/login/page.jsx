@@ -1,16 +1,25 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useActionState } from "react";
-
 import createSession from "@/actions/createSession";
+
+import { toast } from "react-toastify";
 
 export default function Login(params) {
   const [state, formAction] = useActionState(createSession, {});
+  const router = useRouter();
+
 
   useEffect(() => {
     if (state.error) {
-      console.log(state.error);
+      toast.error(state.error);
+    }
+
+    if (state.success) {
+      toast.success("Logged in successfully!");
+      router.push('/');
     }
   }, [state]);
 
@@ -34,7 +43,7 @@ export default function Login(params) {
               id="email"
               name="email"
               className="border rounded w-full py-2 px-3"
-              
+              required
             />
           </div>
 
