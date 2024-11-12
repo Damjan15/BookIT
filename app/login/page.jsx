@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useActionState } from "react";
+import { useAuth } from "@/context/authContext";
 import createSession from "@/actions/createSession";
 
 import { toast } from "react-toastify";
 
 export default function Login(params) {
   const [state, formAction] = useActionState(createSession, {});
+  const { setIsAuthenticated } = useAuth();
   const router = useRouter();
+
 
 
   useEffect(() => {
@@ -19,6 +22,7 @@ export default function Login(params) {
 
     if (state.success) {
       toast.success("Logged in successfully!");
+      setIsAuthenticated(true);
       router.push('/');
     }
   }, [state]);
