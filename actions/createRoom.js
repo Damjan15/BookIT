@@ -7,7 +7,7 @@ import checkAuth from "./checkAuth";
 
 async function createRoom(previousState, formData) {
     // Get database instance
-    const { databases } = await createAdminClient();
+    const { databases, storage } = await createAdminClient();
 
     try {
         const { user } = await checkAuth();
@@ -16,6 +16,27 @@ async function createRoom(previousState, formData) {
             return {
                 error: "You must be logged in to create a room",
             }
+        }
+
+        // Upload image
+        let imageID;
+
+        const image = formData.get('image');
+
+        if (image && image.size > 0 && image.name !== 'undefined') {
+            try {
+                // Upload image
+                const response = await storage.createFile(process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ROOMS, ID.unique(), image);
+                imageID = response.$id; 
+            } catch (error) {
+                console.log("Error uploading image", error);
+
+                return {
+                    error: 'Error uploading image',
+                }
+            }
+        } else {
+            console.log('No image file provided or file is invalid');
         }
 
         // Create room
@@ -34,6 +55,7 @@ async function createRoom(previousState, formData) {
                 availability: formData.get('availability'),
                 price_per_hour: formData.get('price_per_hour'),
                 amenities: formData.get('amenities'),
+                image: imageID,
             }
         );
 
