@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 import { Query } from "node-appwrite";
 import { createSessionClient } from "@/config/appwrite";
 
