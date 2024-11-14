@@ -1,5 +1,6 @@
 import Heading from "@/components/Heading";
 import getMyBookings from "@/actions/getMyBookings";
+import BookedCardRoom from "@/components/BookedCardRoom";
 
 export default async function Bookings(params) {
     const bookings = await getMyBookings();
@@ -9,7 +10,7 @@ export default async function Bookings(params) {
             {bookings.length === 0 ? (
                 <p className="text-gray-600 mt-4">You have no bookings.</p>
             ) : (
-                bookings.map((booking) => <h3>{booking.room_id.name}</h3>)
+                bookings.map((booking) => <BookedCardRoom booking={booking} key={booking.$id} />)
             )}
         </div>
     )
