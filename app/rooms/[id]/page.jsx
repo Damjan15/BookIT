@@ -67,7 +67,7 @@ export default async function Room({ params }) {
           </div>
         </div>
 
-        <BookingForm room={room.$id} />
+        <BookingForm room={room} />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import checkAuth from "./checkAuth";
 import { revalidatePath } from "next/cache";
 
 async function bookRoom(previousState, formData) {
-    const sessionCookie = cookies().get('appwrite-session');
+    const sessionCookie = (await cookies()).get('appwrite-session');
 
     if (!sessionCookie) {
         redirect('/login')
@@ -18,7 +18,7 @@ async function bookRoom(previousState, formData) {
         const { databases } = await createSessionClient(sessionCookie.value);
 
         // Get user
-        const { user } = checkAuth();
+        const { user } = await checkAuth();
 
         if (!user) {
             return {
@@ -43,10 +43,12 @@ async function bookRoom(previousState, formData) {
             room_id: formData.get('room_id'),
         };
 
+        console.log(bookingData.room_id);
+
         // Create booking
         const newBooking = await databases.createDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE,
-            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_ROOMS,
+            process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_BOOKINGS,
             ID.unique(),
             bookingData
         );
