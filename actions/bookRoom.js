@@ -11,7 +11,7 @@ import checkAuth from "./checkAuth";
 import checkRoomAvailability from "./checkRoomAvailability";
 
 
-async function bookRoom(previousState, formData) {
+async function bookRoom(formData) {
     const sessionCookie = (await cookies()).get('appwrite-session');
     const room_id = formData.get('room_id');
 
@@ -58,7 +58,7 @@ async function bookRoom(previousState, formData) {
         };
 
         // Create booking
-        const newBooking = await databases.createDocument(
+        await databases.createDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE,
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_BOOKINGS,
             ID.unique(),
