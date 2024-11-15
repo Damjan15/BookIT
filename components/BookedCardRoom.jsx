@@ -1,8 +1,10 @@
 import Link from "next/link";
 import formatDate from "@/helpers/formatDate";
+import CancelBookingButton from "./CancelBookingButton";
 
 const BookedCardRoom = ({ booking }) => {
     const { room_id: room } = booking;
+
   return (
     <div className="bg-white shadow rounded-lg p-4 mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
       <div>
@@ -21,12 +23,8 @@ const BookedCardRoom = ({ booking }) => {
         >
           View Room
         </Link>
-        <button
-          href="#"
-          className="bg-red-500 text-white px-4 py-2 rounded w-full sm:w-auto text-center hover:bg-red-700"
-        >
-          Cancel Booking
-        </button>
+        
+        <CancelBookingButton bookingId={booking.$id} />
       </div>
     </div>
   );
