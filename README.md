@@ -10,6 +10,7 @@
   </div>
 
 <h3 align="center">BookIT | Meeting Room Booking Application</h3>
+<a href="">Live Preview</a>
 </div>
 
 ## 📋 <a name="table">Table of Contents</a>
