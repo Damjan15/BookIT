@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
       const { isAuthenticated, user } = await checkAuth();
 
       setIsAuthenticated(isAuthenticated);
-      currentUser(user);
+      setCurrentUser(user);
     };
 
     checkAuthentication();

@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import destroySession from "@/actions/destroySession";
-import checkAuth from "@/actions/checkAuth";
+import { useAuth } from "@/context/authContext";
 
 import { FaSignInAlt, FaSignOutAlt, FaBuilding, FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -15,22 +14,13 @@ import logo from "@/assets/images/logo.svg";
 
 const Header = () => {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-  useEffect(() => {
-    const fetchAuthStatus = async () => {
-      const result = await checkAuth();
-
-      setIsAuthenticated(result.isAuthenticated);
-    };
-
-    fetchAuthStatus();
-  }, []);
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
 
   const handleLogout = async () => {
     const { success, error } = await destroySession();
 
     if (success) {
+      setIsAuthenticated(false);
       router.push("/login");
     } else {
       toast.error(error);
