@@ -4,12 +4,14 @@ import Link from "next/link";
 import Heading from "@/components/Heading";
 import BookingForm from "@/components/BookingForm";
 
+import getSingleRoom from "@/actions/getSignalRoom";
+
 import { FaChevronLeft } from "react-icons/fa";
 import rooms from "@/data/rooms.json";
 
-export default function Room({ params }) {
-  const { id } = params;
-  const room = rooms.find((room) => room.$id === id);
+export default async function Room({ params }) {
+  const { id } = await params;
+  const room = await getSingleRoom(id);
 
   if (!room) {
     return <Heading title="Room Not Found" />;
