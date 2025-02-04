@@ -11,6 +11,10 @@ async function createSession(previousState, formData) {
       error: "Please fill out all fields",
     };
   }
+
+  return {
+    success: true,
+  };
 }
 
 export default createSession;
