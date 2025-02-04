@@ -1,10 +1,24 @@
+"use client";
+
 import Link from "next/link";
 
+import { useActionState, useEffect } from "react";
+
+import createSession from "@/actions/createSession";
+
 export default function Login() {
+  const [state, formAction] = useActionState(createSession, {});
+
+  useEffect(() => {
+    if (state.error) {
+      console.log(state.error);
+    }
+  }, [state]);
+
   return (
     <div className="flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm mt-20">
-        <form>
+        <form action={formAction}>
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
             Login
           </h2>
@@ -21,7 +35,6 @@ export default function Login() {
               id="email"
               name="email"
               className="border rounded w-full py-2 px-3"
-              required
             />
           </div>
 
@@ -37,7 +50,6 @@ export default function Login() {
               id="password"
               name="password"
               className="border rounded w-full py-2 px-3"
-              required
             />
           </div>
 
